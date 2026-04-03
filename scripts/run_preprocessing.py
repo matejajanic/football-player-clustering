@@ -7,13 +7,14 @@ from src.preprocessing.filtering import (
     filter_players_by_matches,
     filter_players_by_minutes,
     remove_zero_minute_players,
-    drop_players_without_core_features,
 )
 from src.preprocessing.cleaning import (
     cast_numeric_columns,
     fill_categorical_missing,
     fill_numeric_missing,
+    fill_numeric_missing_with_median,
     remove_duplicates,
+    drop_rows_with_missing,
 )
 
 
@@ -67,18 +68,28 @@ def main() -> None:
     df = filter_players_by_minutes(df, min_minutes=900)
     df = filter_players_by_matches(df, min_matches=10)
 
-    df = fill_numeric_missing(df, numeric_columns, value=0.0)
+    # 1) kategorijske kolone
     df = fill_categorical_missing(df, categorical_columns, value="Unknown")
 
-    df = drop_players_without_core_features(
-        df,
-        required_columns=[
-            "position",
-            "height_in_cm",
-            "age",
-            "avg_market_value",
-        ],
-    )
+    # 2) kolone gde je 0 smislen
+    zero_fill_columns = [
+        "international_caps",
+        "international_goals",
+    ]
+    df = fill_numeric_missing(df, zero_fill_columns, value=0.0)
+
+    # 3) kolone gde je bolja mediana nego 0
+    median_fill_columns = [
+        "market_value_in_eur",
+        "highest_market_value_in_eur",
+        "avg_market_value",
+        "max_market_value",
+        "valuation_records",
+    ]
+    df = fill_numeric_missing_with_median(df, median_fill_columns)
+
+    # 4) height i age NE punimo nulom -> izbacujemo ako fale
+    df = drop_rows_with_missing(df, ["height_in_cm", "age"])
 
     print("Processed shape:", df.shape)
     print("\nProcessed dataset preview:")

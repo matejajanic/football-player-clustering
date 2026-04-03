@@ -4,9 +4,6 @@ import pandas as pd
 
 
 def remove_duplicates(df: pd.DataFrame) -> pd.DataFrame:
-    """
-    Remove duplicate rows.
-    """
     return df.drop_duplicates().copy()
 
 
@@ -15,9 +12,6 @@ def fill_numeric_missing(
     columns: list[str],
     value: float = 0.0,
 ) -> pd.DataFrame:
-    """
-    Fill missing values in numeric columns with a given value.
-    """
     df = df.copy()
 
     for col in columns:
@@ -27,14 +21,25 @@ def fill_numeric_missing(
     return df
 
 
+def fill_numeric_missing_with_median(
+    df: pd.DataFrame,
+    columns: list[str],
+) -> pd.DataFrame:
+    df = df.copy()
+
+    for col in columns:
+        if col in df.columns:
+            median_value = df[col].median()
+            df[col] = df[col].fillna(median_value)
+
+    return df
+
+
 def fill_categorical_missing(
     df: pd.DataFrame,
     columns: list[str],
     value: str = "Unknown",
 ) -> pd.DataFrame:
-    """
-    Fill missing values in categorical columns with a placeholder.
-    """
     df = df.copy()
 
     for col in columns:
@@ -45,9 +50,6 @@ def fill_categorical_missing(
 
 
 def cast_numeric_columns(df: pd.DataFrame, columns: list[str]) -> pd.DataFrame:
-    """
-    Safely cast selected columns to numeric.
-    """
     df = df.copy()
 
     for col in columns:
@@ -58,8 +60,10 @@ def cast_numeric_columns(df: pd.DataFrame, columns: list[str]) -> pd.DataFrame:
 
 
 def select_relevant_columns(df: pd.DataFrame, columns: list[str]) -> pd.DataFrame:
-    """
-    Keep only relevant columns that exist in the dataframe.
-    """
     existing_columns = [col for col in columns if col in df.columns]
     return df[existing_columns].copy()
+
+
+def drop_rows_with_missing(df: pd.DataFrame, columns: list[str]) -> pd.DataFrame:
+    existing_columns = [col for col in columns if col in df.columns]
+    return df.dropna(subset=existing_columns).copy()
