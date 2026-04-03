@@ -1,0 +1,12 @@
+pandas
+numpy
+matplotlib
+seaborn
+scikit-learn
+scipy
+jupyter
+notebook
+ipykernel
+missingno
+tabulate
+pytest

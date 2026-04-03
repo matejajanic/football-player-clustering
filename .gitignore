@@ -1,0 +1,87 @@
+# =========================
+# PYTHON
+# =========================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# =========================
+# JUPYTER
+# =========================
+.ipynb_checkpoints/
+
+# =========================
+# DATA (NE COMMITUJ DATASET)
+# =========================
+data/raw/*
+data/interim/*
+data/processed/*
+
+# keep folder structure
+!data/raw/.gitkeep
+!data/interim/.gitkeep
+!data/processed/.gitkeep
+
+# =========================
+# OUTPUTS
+# =========================
+outputs/figures/*
+outputs/models/*
+outputs/tables/*
+
+!outputs/figures/.gitkeep
+!outputs/models/.gitkeep
+!outputs/tables/.gitkeep
+
+# =========================
+# LOGS / CACHE
+# =========================
+*.log
+*.cache
+
+# =========================
+# VS CODE
+# =========================
+.vscode/
+
+# =========================
+# OS FILES
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# LATEX
+# =========================
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+
+# =========================
+# PYTEST / COVERAGE
+# =========================
+.pytest_cache/
+.coverage
+htmlcov/
+
+# =========================
+# MISC
+# =========================
+*.tmp
+*.bak
