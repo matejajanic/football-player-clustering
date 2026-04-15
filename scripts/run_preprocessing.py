@@ -15,6 +15,7 @@ from src.preprocessing.cleaning import (
     fill_numeric_missing_with_median,
     remove_duplicates,
     drop_rows_with_missing,
+    one_hot_encode,
 )
 
 
@@ -90,6 +91,9 @@ def main() -> None:
 
     # 4) height i age NE punimo nulom -> izbacujemo ako fale
     df = drop_rows_with_missing(df, ["height_in_cm", "age"])
+
+    # one-hot encoding
+    df = one_hot_encode(df, ["position", "foot"])
 
     print("Processed shape:", df.shape)
     print("\nProcessed dataset preview:")

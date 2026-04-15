@@ -67,3 +67,7 @@ def select_relevant_columns(df: pd.DataFrame, columns: list[str]) -> pd.DataFram
 def drop_rows_with_missing(df: pd.DataFrame, columns: list[str]) -> pd.DataFrame:
     existing_columns = [col for col in columns if col in df.columns]
     return df.dropna(subset=existing_columns).copy()
+
+def one_hot_encode(df: pd.DataFrame, columns: list[str]) -> pd.DataFrame:
+    existing = [col for col in columns if col in df.columns]
+    return pd.get_dummies(df, columns=existing, drop_first=True)
